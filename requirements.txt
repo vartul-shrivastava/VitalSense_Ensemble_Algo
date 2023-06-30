@@ -4,3 +4,4 @@ scikit-learn
 pickle5
 gunicorn
 flask
+xgboost
