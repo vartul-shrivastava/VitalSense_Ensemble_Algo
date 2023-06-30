@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Result</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<style>
+  .very-high {
+    background-color: red;
+  }
+  .high {
+    background-color: orange;
+  }
+  .moderate {
+    background-color: yellow;
+  }
+  .low {
+    background-color: green;
+  }
+  .not-available {
+    background-color: lightgray;
+  }
+  .unknown {
+    background-color: gray;
+  }
+</style>
+<body>
+  <header>
+    <nav>
+      <ul class="nav-menu">
+        <li><a href="#">Access VitalSense Tool</a></li>
+        <li><a href="#algo-explanation">Explanation about Algorithm and Dataset</a></li>
+        <li><a href="#about-project">About Project</a></li>
+      </ul>
+    </nav>
+  </header>
+  <h1 style="margin-top:5%;">Clinical Biomarkers and Risk Assessment Summary</h1>
+  
+  <table>
+    <thead>
+      <tr>
+        <th>Target Column</th>
+        <th>Predicted ± Error</th>
+        <th>Risk Assessment</th>
+        <th>Range</th> <!-- New column for the respective range -->
+      </tr>
+    </thead>
+    <tbody id="predictions-table">
+    </tbody>
+  </table>
+  <script src="{{ url_for('static', filename='result.js') }}"></script>
+  <script src="{{ url_for('static', filename='risk.js') }}"></script>
+  <footer class="footer">
+    <div class="inline-container">
+      <p>Developed by Dr. Pooja Jain and Vartul Shrivastava</p>
+    </div>
+  </footer>
+</body>
+</html>

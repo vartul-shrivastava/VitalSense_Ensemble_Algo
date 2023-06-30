@@ -22,12 +22,11 @@ body {
 }
 /* Additional CSS styles for the table */
 table {
-  width: 60%;
   margin: 0 auto;
+  width: 60%;
   border-collapse: collapse;
   background-color: #d4f9ff;
   font-family: 'Roboto', sans-serif;
-  margin-bottom: 8%;
 }
 
 th, td {
@@ -49,10 +48,9 @@ tbody tr:hover {
   background-color: #abdfec;
 }
 
-h1 {
+h3 {
   text-align: center;
-  margin-top: 40px;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Raleway', sans-serif;
 }
 
 .inline-container {

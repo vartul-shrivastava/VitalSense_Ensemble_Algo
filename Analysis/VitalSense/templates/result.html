@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Result</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-</head>
-<style>
+  <head>
+    <title>Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  </head>
+  <title>Diseases Risk Scores</title>
+  <style>
   .very-high {
     background-color: red;
   }
@@ -24,7 +25,7 @@
   .unknown {
     background-color: gray;
   }
-</style>
+  </style>
 <body>
   <header>
     <nav>
@@ -35,8 +36,11 @@
       </ul>
     </nav>
   </header>
-  <h1 style="margin-top:5%;">Clinical Biomarkers and Risk Assessment Summary</h1>
-  
+  <h3 style="margin-top: 5%;">Assessing Disease Vulnerability and Influential Factors: Exquisite Risk Scores</h3>
+  <div id="output"></div>
+    <script src="{{ url_for('static', filename='risk.js') }}"></script>
+  </div>
+  <h3 style="margin-top: 1%;">Predicted Biomarkers and Comparative Assessment within the Spectrum of Normalcy</h3>
   <table>
     <thead>
       <tr>
@@ -49,11 +53,12 @@
     <tbody id="predictions-table">
     </tbody>
   </table>
+  
   <script src="{{ url_for('static', filename='result.js') }}"></script>
-  <footer class="footer">
-    <div class="inline-container">
-      <p>Developed by Dr. Pooja Jain and Vartul Shrivastava</p>
-    </div>
-  </footer>
 </body>
+<footer class="footer">
+  <div class="inline-container">
+    <p>Developed by Dr. Pooja Jain and Vartul Shrivastava</p>
+  </div>
+</footer>
 </html>
