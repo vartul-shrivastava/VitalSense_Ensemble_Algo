@@ -3,3 +3,4 @@ pandas
 scikit-learn
 pickle5
 gunicorn
+flask
