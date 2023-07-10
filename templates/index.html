@@ -1,18 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>VitalSense | Biomarkers and Diseases Prediction using Machine Learning</title>
+    <title>Website with Disclaimer</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="background">
-        <header>
+        <div class="box-overlay" id="about-box-overlay">
+            <div class="box-container">
+                <h2>About Project - VitalSense Tool</h2>
+                <h6>Vitalsense is an innovative tool developed by Dr. Pooja Jain and Vartul Shrivastava. It utilizes an ensemble learning algorithm to predict the risk of diseases associated with obesity caused by a sedentary lifestyle.</h6>
+                <h6>By analyzing body measurements and physical activity levels, Vitalsense provides personalized risk assessments and predicts essential biomarkers. The tool focuses on diseases commonly linked to obesity, such as Diabetes Type 2, Metabolic Syndrome, Cardiovascular Disease, Hyperlipidemia, and Non-Alcoholic Fatty Liver Disease.</h6>
+                <h6>With its user-friendly interface, individuals can easily assess their disease risks and take proactive preventive measures. Vitalsense empowers users to understand their health risks based on physical activity and body measurements, facilitating timely interventions and lifestyle modifications to improve overall health outcomes.</h6>
+                <button class="closeBtn" id="about-box-close">Close</button>
+            </div>
+        </div>
+        
+        <div class="box-overlay" id="algo-box-overlay">
+            <div class="box-container">
+                <h2>Algorithm and Dataset Overview</h2>
+                <h6>Vitalsense is an innovative tool that leverages an ensemble learning algorithm, specifically XGBoost, to predict the risk of diseases associated with obesity resulting from a sedentary lifestyle. The development of Vitalsense relies on the integration and preprocessing of NHANES (National Health and Nutrition Examination Survey) datasets from multiple years. NHANES datasets are renowned for providing comprehensive health information collected through surveys and physical examinations, making them a valuable source of data for studying various health-related factors.</h6>
+                <h6>            The preprocessing steps in Vitalsense involve data integration, filtering out instances with missing lab values, and applying the Multiple Imputation by Chained Equations (MICE) technique to handle remaining missing values. This ensures data quality and completeness, allowing for accurate predictions and reliable analysis. The XGBoost algorithm is then applied, benefiting from its ability to capture complex relationships and improve prediction accuracy. XGBoost constructs an ensemble of decision trees and combines their outputs to make robust predictions.</h6>
+
+        
+                    
+                   <h6>Risk assessment in Vitalsense is based on the predictions made by the XGBoost algorithm using the integrated and preprocessed NHANES datasets. The algorithm considers calculated features related to diseases like Diabetes Type 2, Metabolic Syndrome, Cardiovascular Disease, Hyperlipidemia, and Non-Alcoholic Fatty Liver Disease. By comparing the predicted values with established thresholds and ranges specific to each target variable, a risk score is assigned, representing the probability or severity of the associated risk. Weighted risk scores, reflecting the relative importance of different variables, are aggregated to provide a comprehensive assessment of an individual's susceptibility to specific diseases.</h6> 
+                <button class="closeBtn" id="algo-box-close">Close</button>
+            </div>
+        </div>
+        <header>        
             <nav>
               <ul class="nav-menu">
-                <li><a href="#tool">Access VitalSense Tool</a></li>
-                <li><a href="#algo-explanation">Explanation about Algorithm and Dataset</a></li>
-                <li><a href="#about-project">About Project</a></li>
+                <li><a href="#algo-explanation" id="algo-link">Explanation about Algorithm and Dataset</a></li>
+                <li><a href="#about-project" id="about-link">About Project</a></li>
+              </ul>
               </ul>
             </nav>
           </header>
@@ -51,7 +73,6 @@
                 <img src="{{ url_for('static', filename='logo.png') }}" alt="IIITN Logo">
             </div>
             <div id="content-container">
-
                 <div id="progress-container">
                     <div id="progress-slider"></div>
                     <div id="progress-percent"></div>
@@ -62,6 +83,7 @@
               <button id="next-btn">Next</button>
             </div>
           </div>  
+        
           <span></span>
           <span></span>
           <span></span>
@@ -80,13 +102,43 @@
           <span></span>
           <span></span>
           <span></span>
-     </div>
+        </div>
+        
      <footer class="footer">
         <div class="inline-container">
-          <p>Developed by Dr. Pooja Jain & Vartul Shrivastava</p>
+          <p>Developed by Dr. Pooja Jain and Vartul Shrivastava</p>
         </div>
       </footer>
-    <!-- Rest of your website content goes here -->
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+      <script src="{{ url_for('static', filename='script.js') }}"></script>
+      <script>
+          // Add event listener to the "Access VitalSense Tool" link
+          const about = document.getElementById("about-link");
+          const aboutboxOverlay = document.getElementById("about-box-overlay");
+          const aboutboxClose = document.getElementById("about-box-close");
+  
+          about.addEventListener("click", function(e) {
+              e.preventDefault();
+              aboutboxOverlay.style.display = "flex";
+          });
+  
+          aboutboxClose.addEventListener("click", function() {
+              aboutboxOverlay.style.display = "none";
+          });          
+      </script>
+      <script>
+          const algo = document.getElementById("algo-link");
+          const algoboxOverlay = document.getElementById("algo-box-overlay");
+          const algoboxClose = document.getElementById("algo-box-close");
+  
+          algo.addEventListener("click", function(e) {
+              e.preventDefault();
+              algoboxOverlay.style.display = "flex";
+          });
+  
+          algoboxClose.addEventListener("click", function() {
+              algoboxOverlay.style.display = "none";
+          });
+
+      </script>
 </body>
 </html>

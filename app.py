@@ -1,11 +1,9 @@
-import pickle5 as pickle
+import pickle
 import numpy as np
 from flask import Flask, render_template, request, jsonify
 target_cols = ['Glycohemoglobin',
-       'Fasting glucose (mg/dL)', 'Fasting glucose (mmol/L)',
        'Insulin (pmol/L)', 'HDL cholesterol (mg/dL)',
-       'HDL cholesterol (mmol/L)',
-       'Total cholesterol (mmol/L)', 'Triglycerides (mmol/L)',
+       'Total cholesterol (mg/dL)', 'Triglycerides (mg/dL)',
        'LDL cholesterol (mg/dL)', 'Trunk Fat (%)','Total Fat (%)']
 
 app = Flask(__name__)

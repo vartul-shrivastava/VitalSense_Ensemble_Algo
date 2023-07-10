@@ -4,50 +4,57 @@ var predictionsParam = urlParams.get('predictions');
 // Split the predictions string into an array
 var predictionsArray = predictionsParam.split(',');
 
-// Performance metrics (errors) array
+// Performance metrics with updated risk assessment
 var performanceMetrics = [
-  { target: 'Glycohemoglobin', unit: '%', MAE: 0.240, thresholds: { veryHigh: 6.8, high: 6.4, moderate: 5.8 }, range: '4 - 5.7' },
-  { target: 'Fasting glucose (mg/dL)', unit: 'mg/dL', MAE: 2.985, thresholds: { veryHigh: 126, high: 110, moderate: 100 }, range: '50 - 100' },
-  { target: 'Fasting glucose (mmol/L)', unit: 'mmol/L', MAE: 0.235,thresholds: { veryHigh: 6.1, high: 7.8, moderate: 5.7 }, range: '3.9 - 5.7' },
-  { target: 'Insulin (pmol/L)', unit: 'pmol/L', MAE: 1.383, RMSE: 1.1545773173638372, thresholds: { veryHigh: 174, high: 140, moderate: 115 }, range: '75 - 115' },
+  { target: 'Glycohemoglobin', unit: '%', MAE: 0.240, thresholds: { veryHigh: 6.8, high: 6.4, moderate: 5.7 }, range: '4 - 5.7' },
+  { target: 'Insulin (pmol/L)', unit: 'pmol/L', MAE: 1.383, RMSE: 1.1545773173638372, thresholds: { veryHigh: 100, high: 50, moderate: 20 }, range: '10 - 20' },
   { target: 'HDL cholesterol (mg/dL)', unit: 'mg/dL', MAE: 2.044, RMSE: 1.9784903164896723, thresholds: { veryHigh: 80, high: 65, moderate: 55 }, range: '35 - 55' },
-  { target: 'HDL cholesterol (mmol/L)', unit: 'mmol/L', MAE: 0.0917, RMSE: 0.0448478631816505, thresholds: { veryHigh: 5.5, high: 4, moderate: 2 }, range: '0.8 - 2' },
   { target: 'Total cholesterol (mg/dL)', unit: 'mg/dL', MAE: 0.4806, RMSE: 5.217620150083706, thresholds: { veryHigh: 240, high: 220, moderate: 200 }, range: '< 200' },
-  { target: 'Triglycerides (mmol/L)', unit: 'mmol/L', MAE: 0.13175, RMSE: 0.08145638755300426, thresholds: { veryHigh: 6, high: 2, moderate: 1.7 }, range: ' < 1.7' },
-  { target: 'LDL cholesterol (mg/dL)', unit: 'mg/dL', MAE: 12.729, RMSE: 6.078107751797688, thresholds: { veryHigh: 160, high: 130, moderate: 100 }, range: '< 100' },
-  { target: 'Trunk Fat (%)', unit: '%', MAE: 0.515, RMSE: 460.7133074799416, thresholds: { veryHigh: 35, high: 30, moderate: 25 }, range: '< 25' },
-  { target: 'Total Fat (%)', unit: '%', MAE: 0.528, RMSE: 0.9578235092286134, thresholds: { veryHigh: 35, high: 30, moderate: 25 }, range: '< 25' }
+  { target: 'Triglycerides (mg/dL)', unit: 'mg/dL', MAE: 0.13175, RMSE: 0.08145638755300426, thresholds: { veryHigh: 400, high: 200, moderate: 175 }, range: ' < 175' },
+  { target: 'LDL cholesterol (mg/dL)', unit: 'mg/dL', MAE: 12.729, RMSE: 6.078107751797688, thresholds: { veryHigh: 190, high: 160, moderate: 130 }, range: '< 100' },
+  { target: 'Trunk Fat (%)', unit: '%', MAE: 0.515, RMSE: 460.7133074799416, thresholds: { veryHigh: 35, high: 30, moderate: 27 }, range: '< 27' },
+  { target: 'Total Fat (%)', unit: '%', MAE: 0.528, RMSE: 0.9578235092286134, thresholds: { veryHigh: 35, high: 30, moderate: 27 }, range: '< 27' }
 ];
 
-// Risk levels and associated diseases
-var riskLevels = [
-  { label: 'Very High Risk', diseases: ['Type 2 Diabetes', 'Cardiovascular Disease'] },
-  { label: 'High Risk', diseases: ['Cardiovascular Disease'] },
-  { label: 'Moderate Risk', diseases: ['Metabolic Syndrome'] },
-  { label: 'Low Risk', diseases: [] },
-  { label: 'Not Available', diseases: [] },
-  { label: 'Unknown', diseases: [] }
-];
+// Mapping of risk level labels
+var riskLevelLabels = {
+  0: 'Very High Risk',
+  1: 'High Risk',
+  2: 'Moderate Risk',
+  3: 'Low Risk',
+  4: 'Not Available',
+  5: 'Unknown'
+};
 
 // Function to calculate the risk assessment based on the predicted value and thresholds
 function calculateRiskAssessment(predictedValue, thresholds) {
+  if (predictedValue === 'NA') {
+    return riskLevelLabels[4]; // Not Available
+  }
+
+  if (predictedValue < 0) {
+    return riskLevelLabels[5]; // Unknown
+  }
+
   if (predictedValue >= thresholds.veryHigh) {
-    return riskLevels[0]; // Very High Risk
+    return riskLevelLabels[0]; // Very High Risk
   } else if (predictedValue >= thresholds.high) {
-    return riskLevels[1]; // High Risk
+    return riskLevelLabels[1]; // High Risk
   } else if (predictedValue >= thresholds.moderate) {
-    return riskLevels[2]; // Moderate Risk
-  } else if (predictedValue > 0) {
-    return riskLevels[3]; // Low Risk
-  } else if (predictedValue === 'NA') {
-    return riskLevels[4]; // Not Available
+    return riskLevelLabels[2]; // Moderate Risk
   } else {
-    return riskLevels[5]; // Unknown
+    return riskLevelLabels[3]; // Low Risk
   }
 }
 
 // Display the predictions, errors, and risk assessment in a table
 var predictionsTable = document.getElementById('predictions-table');
+
+// Create the header row
+var headerRow = document.createElement('tr');
+headerRow.innerHTML = '<th>Target</th><th>Predicted ± Error</th><th>Risk Assessment</th><th>Range</th>';
+predictionsTable.appendChild(headerRow);
+
 performanceMetrics.forEach(function (metric) {
   var row = document.createElement('tr');
 
@@ -68,8 +75,8 @@ performanceMetrics.forEach(function (metric) {
   // Risk assessment cell
   var riskCell = document.createElement('td');
   var riskAssessment = calculateRiskAssessment(predictedValue, metric.thresholds);
-  riskCell.textContent = riskAssessment.label;
-  riskCell.classList.add(riskAssessment.label.toLowerCase().replace(/\s+/g, '-'));
+  riskCell.textContent = riskAssessment;
+  riskCell.classList.add(riskAssessment.toLowerCase().replace(/\s+/g, '-'));
   row.appendChild(riskCell);
 
   // Range cell

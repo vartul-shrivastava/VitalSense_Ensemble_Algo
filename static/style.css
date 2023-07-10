@@ -5,7 +5,37 @@ body {
     line-height: 1.5;
     background-color: rgba(226, 249, 255, 0.8);
 }
-/* Add these styles to the existing "style.css" file */
+.box-overlay {
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.box-container {
+  z-index: 999;
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 800px;
+  text-align: center;
+}
+
+.box-close {
+  z-index: 999;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
 .high-value {
   background-color: #ff0000; /* Red */
   color: #ffffff; /* White */
@@ -20,7 +50,20 @@ body {
   background-color: #ffff00; /* Yellow */
   color: #000000; /* Black */
 }
-/* Additional CSS styles for the table */
+h5 {
+  font-weight: 400;
+  margin: 10px auto;
+  text-align: justify;
+  width: 60%;
+}
+
+h6 {
+  font-size: 14px;
+  font-weight: 400;
+  margin: 10px auto;
+  text-align: justify;
+}
+
 table {
   margin: 0 auto;
   width: 60%;
@@ -74,7 +117,7 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 999;
+  z-index: 900;
 }
 
 .nav-menu {
@@ -178,7 +221,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 1000;
   background-color: rgb(193, 244, 255); /* Add a semi-transparent background */
   backdrop-filter: blur(5px); /* Apply a blur effect to the background */
 }
@@ -218,6 +261,21 @@ input[type="checkbox"] {
     margin-right: 10px;
 }
 
+.pdf {
+  margin: 50px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  background-color: #3F91AB;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
 #submit-btn,
 #close-btn {
     display: inline-block;
@@ -232,6 +290,21 @@ input[type="checkbox"] {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+}
+
+.closeBtn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  background-color: #3F91AB;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 #submit-btn:hover,
@@ -265,7 +338,7 @@ input[type="checkbox"] {
   border: #eefbff 2px solid;
   background-color: #f7fdffa7;
   border-radius: 10px;
-  z-index: 999;
+  z-index: 900;
   max-width: 800px;
   margin: 0 auto;
   position: absolute;

@@ -1,64 +1,146 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Predicted Result</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  </head>
-  <title>Diseases Risk Scores</title>
+<head>
+  <title>Result</title>
+  <meta name="viewport" content="width=device-width, initial-scale=0.9">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <style>
-  .very-high {
-    background-color: red;
-  }
-  .high {
-    background-color: orange;
-  }
-  .moderate {
-    background-color: yellow;
-  }
-  .low {
-    background-color: green;
-  }
-  .not-available {
-    background-color: lightgray;
-  }
-  .unknown {
-    background-color: gray;
-  }
+    /* Popup styles */
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .popup-content {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .popup-message {
+      margin-bottom: 20px;
+    }
+
+    .popup-options {
+      display: flex;
+      justify-content: center;
+    }
+
+    .popup-button {
+      margin: 0 10px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
   </style>
+  <script>
+    function showBoxSelection() {
+      var popup = document.createElement("div");
+      popup.className = "popup";
+
+      var popupContent = document.createElement("div");
+      popupContent.className = "popup-content";
+
+      var message = document.createElement("p");
+      message.className = "popup-message";
+      message.textContent = "What would you like to see?";
+
+      var options = document.createElement("div");
+      options.className = "popup-options";
+
+      var box1Button = document.createElement("button");
+      box1Button.className = "popup-button";
+      box1Button.textContent = "Diseases Assessment and the Risk Score Associated";
+      box1Button.addEventListener("click", function() {
+        showBox("box1");
+        hidePopup();
+      });
+
+      var box2Button = document.createElement("button");
+      box2Button.className = "popup-button";
+      box2Button.textContent = "Predicted Biomarkers under the spectrum of normalcy";
+      box2Button.addEventListener("click", function() {
+        showBox("box2");
+        hidePopup();
+      });
+
+      var bothButton = document.createElement("button");
+      bothButton.className = "popup-button";
+      bothButton.textContent = "Both of them";
+      bothButton.addEventListener("click", function() {
+        showBox("box1");
+        showBox("box2");
+        hidePopup();
+      });
+
+      options.appendChild(box1Button);
+      options.appendChild(box2Button);
+      options.appendChild(bothButton);
+
+      popupContent.appendChild(message);
+      popupContent.appendChild(options);
+      popup.appendChild(popupContent);
+
+      document.body.appendChild(popup);
+    }
+
+    function showBox(id) {
+      var box = document.getElementById(id);
+      if (box) {
+        box.style.display = "block";
+      }
+    }
+
+    function hidePopup() {
+      var popup = document.querySelector(".popup");
+      if (popup) {
+        popup.parentNode.removeChild(popup);
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", function() {
+      showBoxSelection();
+    });
+  </script>
+</head>
 <body>
-  <header>
-    <nav>
-      <ul class="nav-menu">
-        <li><a href="#">Access VitalSense Tool</a></li>
-        <li><a href="#algo-explanation">Explanation about Algorithm and Dataset</a></li>
-        <li><a href="#about-project">About Project</a></li>
-      </ul>
-    </nav>
-  </header>
+<!-- table 1 -->
+<div id="box1" style="display: none;">
   <h3 style="margin-top: 5%;">Assessing Disease Vulnerability and Influential Factors: Exquisite Risk Scores</h3>
   <div id="output"></div>
-    <script src="{{ url_for('static', filename='risk.js') }}"></script>
-  </div>
+  <script src="{{ url_for('static', filename='risk.js') }}"></script>
+  <h5>The risk scoring system on this website utilizes predicted values and predefined performance metrics to assess the probability of specific health conditions. By comparing the predicted values with optimal ranges, risk scores are calculated for various health metrics such as Glycohemoglobin, Insulin, HDL cholesterol, and others. These scores are determined based on the deviation from the optimal range and weighted factors assigned to each metric. The overall risk is evaluated by considering multiple metrics relevant to specific diseases, resulting in an overall risk score. The risk scores are presented with color-coded indicators for easy interpretation. It's important to note that the risk scoring system provides informative insights and should not replace personalized medical advice.</h5>
+</div>
+
+<!-- table 2 -->
+<div id="box2" style="display: none;">
   <h3 style="margin-top: 1%;">Predicted Biomarkers and Comparative Assessment within the Spectrum of Normalcy</h3>
   <table>
-    <thead>
-      <tr>
-        <th>Target Column</th>
-        <th>Predicted ± Error</th>
-        <th>Risk Assessment</th>
-        <th>Range</th> <!-- New column for the respective range -->
-      </tr>
-    </thead>
-    <tbody id="predictions-table">
-    </tbody>
+    <tbody id="predictions-table"></tbody>
   </table>
-  
   <script src="{{ url_for('static', filename='result.js') }}"></script>
-</body>
+  <h5 style="margin-bottom: 5%;">
+    Note: It's important to understand that predicted biomarkers provided on this website are estimates and should be treated as reference values. Predicted values may not always be entirely accurate and can vary from actual measurements. These predictions are based on statistical models and may have inherent limitations or uncertainties. Therefore, it's crucial to interpret and use these predicted biomarkers cautiously. For accurate and reliable assessments of your health, we recommend consulting with a healthcare professional and conducting appropriate medical tests or evaluations. They will provide personalized guidance and insights based on comprehensive clinical assessments.</h5>
+</div>
+
 <footer class="footer">
-  <div class="inline-container">
-    <p>Developed by Dr. Pooja Jain & Vartul Shrivastava</p>
+  <div class="inline-container" style="text-align: center;align-items: center;">
+    <p>Developed by Dr. Pooja Jain and Vartul Shrivastava</p>
   </div>
 </footer>
+</body>
 </html>
