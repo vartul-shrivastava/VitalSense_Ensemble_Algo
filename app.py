@@ -1,4 +1,4 @@
-import pickle
+import pickle5 as pickle
 import numpy as np
 from flask import Flask, render_template, request, jsonify
 target_cols = ['Glycohemoglobin',
