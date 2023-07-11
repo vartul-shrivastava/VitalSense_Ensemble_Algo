@@ -3,11 +3,11 @@ var predictionsParam = urlParams.get('predictions');
 var predictionsArray = predictionsParam.split(',');
 
 var performanceMetrics = [
-  { target: 'Glycohemoglobin', unit: '%', MAE: 0.5, weight: 1, range: [4, 5.7] },
+  { target: 'Glycohemoglobin', unit: '%', MAE: 0.5, weight: 0.4, range: [4, 5.7] },
   { target: 'Insulin (pmol/L)', unit: 'pmol/L', MAE: 20, RMSE: 25, weight: 1, range: [75, 115] },
   { target: 'HDL cholesterol (mg/dL)', unit: 'mg/dL', MAE: 5, RMSE: 8, weight: 0.2, range: [35, 55] },
   { target: 'Total cholesterol (mg/dL)', unit: 'mg/dL', MAE: 20, RMSE: 30, weight: 0.2, range: [0, 200] },
-  { target: 'Triglycerides (mg/dL)', unit: 'mg/dL', MAE: 30, RMSE: 40, weight: 0.2, range: [0, 175] },
+  { target: 'Triglycerides (mg/dL)', unit: 'mg/dL', MAE: 30, RMSE: 40, weight: 0.2, range: [0, 200] },
   { target: 'LDL cholesterol (mg/dL)', unit: 'mg/dL', MAE: 20, RMSE: 30, weight: 0.2, range: [0, 140] },
   { target: 'Trunk Fat (%)', unit: '%', MAE: 2, RMSE: 5, weight: 0.2, range: [0, 27] },
   { target: 'Total Fat (%)', unit: '%', MAE: 2, RMSE: 5, weight: 0.2, range: [0, 27] }
@@ -28,11 +28,11 @@ function calculateRisk(predictionsArray, performanceMetrics) {
     } else if (prediction >= maxRange) {
       const deviation = Math.abs(prediction - maxRange);
       const normalizedDeviation = deviation / (rangeDifference / 2);
-      riskScore = normalizedDeviation * 100;
+      riskScore = 100 + (normalizedDeviation * 100);
     } else {
       const deviation = Math.abs(prediction - optimalValue);
       const normalizedDeviation = deviation / (rangeDifference / 2);
-      riskScore = normalizedDeviation * 20;
+      riskScore = (normalizedDeviation * 20);
     }
 
     return { target: metric.target, weight: metric.weight, riskScore };
@@ -41,15 +41,14 @@ function calculateRisk(predictionsArray, performanceMetrics) {
   return riskScores;
 }
 
-
 var riskScores = calculateRisk(predictionsArray, performanceMetrics);
 var diseases = [
   { 
     name: 'Diabetes Type 2', 
     targets: [
-      { target: 'Glycohemoglobin', weight:1 },
+      { target: 'Glycohemoglobin', weight: 0.4 },
     ],
-    influencingParams: 'Glycohemoglobin'
+    influencingParams: 'Glycohemoglobin, Fasting glucose levels'
   },
   { 
     name: 'Metabolic Syndrome', 
@@ -57,7 +56,7 @@ var diseases = [
       { target: 'Triglycerides (mg/dL)', weight: 0.2 },
       { target: 'HDL cholesterol (mg/dL)', weight: 0.2 },
       { target: 'Total cholesterol (mg/dL)', weight: 0.2 },
-      { target: 'LDL cholesterol (mg/dL)', weight: 0.1 }
+      { target: 'LDL cholesterol (mg/dL)', weight: 0.2 }
     ],
     influencingParams: 'Triglyceride levels, HDL cholesterol levels, Total cholesterol levels, LDL cholesterol levels'
   },
@@ -66,7 +65,7 @@ var diseases = [
     targets: [
       { target: 'HDL cholesterol (mg/dL)', weight: 0.2 },
       { target: 'Total cholesterol (mg/dL)', weight: 0.2 },
-      { target: 'LDL cholesterol (mg/dL)', weight: 0.1 },
+      { target: 'LDL cholesterol (mg/dL)', weight: 0.2 },
       { target: 'Triglycerides (mg/dL)', weight: 0.2 }
     ],
     influencingParams: 'HDL cholesterol levels, Total cholesterol levels, Triglyceride levels, LDL cholesterol levels'
@@ -75,7 +74,7 @@ var diseases = [
     name: 'Hyperlipidemia',
     targets: [
       { target: 'Total cholesterol (mg/dL)', weight: 0.4 },
-      { target: 'LDL cholesterol (mg/dL)', weight: 0.1 },
+      { target: 'LDL cholesterol (mg/dL)', weight: 0.4 },
       { target: 'Triglycerides (mg/dL)', weight: 0.2 }
     ],
     influencingParams: 'Total cholesterol levels, LDL cholesterol levels, Triglyceride levels'
@@ -175,3 +174,5 @@ function interpolateColor(color1, color2, percent) {
 
   return '#' + (r << 16 | g << 8 | b).toString(16).padStart(6, '0');
 }
+
+// Function to save the current page as a PDF

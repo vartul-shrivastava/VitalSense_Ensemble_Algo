@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-
 document.getElementById('submit-btn').addEventListener('click', function() {
   var checkbox = document.getElementById('checkbox-agree');
   if (!checkbox.checked) {
