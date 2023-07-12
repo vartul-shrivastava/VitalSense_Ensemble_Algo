@@ -63,8 +63,8 @@ var averageValues = [
 20,   // Average time spent walking or bicycling for travel (minutes)
 30,   // Average time spent in vigorous-intensity sports, fitness, or recreational activities (minutes)
 200,  // Average time spent sitting (minutes)
-3.5,    // Average hours watched TV or videos in the past 30 days (hours)
-2.8     // Average hours used a computer in the past 30 days (hours)
+60,    // Average hours watched TV or videos in the past 30 days (hours)
+180     // Average hours used a computer in the past 30 days (hours)
 ];
 
 var progressSlider = document.getElementById('progress-slider');

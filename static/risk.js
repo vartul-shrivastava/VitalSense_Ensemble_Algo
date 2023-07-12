@@ -3,59 +3,30 @@ var predictionsParam = urlParams.get('predictions');
 var predictionsArray = predictionsParam.split(',');
 
 var performanceMetrics = [
-  { target: 'Glycohemoglobin', unit: '%', MAE: 0.5, weight: 0.4, range: [4, 5.7] },
-  { target: 'Insulin (pmol/L)', unit: 'pmol/L', MAE: 20, RMSE: 25, weight: 1, range: [75, 115] },
-  { target: 'HDL cholesterol (mg/dL)', unit: 'mg/dL', MAE: 5, RMSE: 8, weight: 0.2, range: [35, 55] },
-  { target: 'Total cholesterol (mg/dL)', unit: 'mg/dL', MAE: 20, RMSE: 30, weight: 0.2, range: [0, 200] },
-  { target: 'Triglycerides (mg/dL)', unit: 'mg/dL', MAE: 30, RMSE: 40, weight: 0.2, range: [0, 200] },
-  { target: 'LDL cholesterol (mg/dL)', unit: 'mg/dL', MAE: 20, RMSE: 30, weight: 0.2, range: [0, 140] },
-  { target: 'Trunk Fat (%)', unit: '%', MAE: 2, RMSE: 5, weight: 0.2, range: [0, 27] },
-  { target: 'Total Fat (%)', unit: '%', MAE: 2, RMSE: 5, weight: 0.2, range: [0, 27] }
+  { target: 'Glycohemoglobin', unit: '%', MAE: 0.5, weight: 0.4, range: [5.5, 6.3] },
+  { target: 'Insulin (pmol/L)', unit: 'pmol/L', MAE: 20, RMSE: 25, weight: 1, range: [25, 35] },
+  { target: 'HDL cholesterol (mg/dL)', unit: 'mg/dL', MAE: 5, RMSE: 8, weight: 0.2, range: [60, 70] },
+  { target: 'Total cholesterol (mg/dL)', unit: 'mg/dL', MAE: 20, RMSE: 30, weight: 0.2, range: [200, 250] },
+  { target: 'Triglycerides (mg/dL)', unit: 'mg/dL', MAE: 30, RMSE: 40, weight: 0.2, range: [170, 210] },
+  { target: 'LDL cholesterol (mg/dL)', unit: 'mg/dL', MAE: 20, RMSE: 30, weight: 0.2, range: [90, 120] },
+  { target: 'Trunk Fat (%)', unit: '%', MAE: 2, RMSE: 5, weight: 0.2, range: [25, 35] },
+  { target: 'Total Fat (%)', unit: '%', MAE: 2, RMSE: 5, weight: 0.2, range: [25, 35] }
 ];
 
-// Calculate risk scores based on predictions and performance metrics
-function calculateRisk(predictionsArray, performanceMetrics) {
-  const riskScores = performanceMetrics.map(metric => {
-    const prediction = parseFloat(predictionsArray.shift());
-    let riskScore = 0;
-
-    const [minRange, maxRange] = metric.range;
-    const rangeDifference = maxRange - minRange;
-    const optimalValue = (minRange + maxRange) / 2;
-
-    if (prediction <= minRange) {
-      riskScore = 0;
-    } else if (prediction >= maxRange) {
-      const deviation = Math.abs(prediction - maxRange);
-      const normalizedDeviation = deviation / (rangeDifference / 2);
-      riskScore = 100 + (normalizedDeviation * 100);
-    } else {
-      const deviation = Math.abs(prediction - optimalValue);
-      const normalizedDeviation = deviation / (rangeDifference / 2);
-      riskScore = (normalizedDeviation * 20);
-    }
-
-    return { target: metric.target, weight: metric.weight, riskScore };
-  });
-
-  return riskScores;
-}
-
-var riskScores = calculateRisk(predictionsArray, performanceMetrics);
 var diseases = [
   { 
     name: 'Diabetes Type 2', 
     targets: [
-      { target: 'Glycohemoglobin', weight: 0.4 },
+      { target: 'Glycohemoglobin', weight: 1 },
     ],
-    influencingParams: 'Glycohemoglobin, Fasting glucose levels'
+    influencingParams: 'Glycohemoglobin'
   },
   { 
     name: 'Metabolic Syndrome', 
     targets: [
       { target: 'Triglycerides (mg/dL)', weight: 0.2 },
-      { target: 'HDL cholesterol (mg/dL)', weight: 0.2 },
-      { target: 'Total cholesterol (mg/dL)', weight: 0.2 },
+      { target: 'HDL cholesterol (mg/dL)', weight: -0.1 },
+      { target: 'Total cholesterol (mg/dL)', weight: 0.4 },
       { target: 'LDL cholesterol (mg/dL)', weight: 0.2 }
     ],
     influencingParams: 'Triglyceride levels, HDL cholesterol levels, Total cholesterol levels, LDL cholesterol levels'
@@ -63,10 +34,10 @@ var diseases = [
   { 
     name: 'Cardiovascular Disease', 
     targets: [
-      { target: 'HDL cholesterol (mg/dL)', weight: 0.2 },
+      { target: 'HDL cholesterol (mg/dL)', weight: -0.1 },
       { target: 'Total cholesterol (mg/dL)', weight: 0.2 },
-      { target: 'LDL cholesterol (mg/dL)', weight: 0.2 },
-      { target: 'Triglycerides (mg/dL)', weight: 0.2 }
+      { target: 'LDL cholesterol (mg/dL)', weight: 0.3 },
+      { target: 'Triglycerides (mg/dL)', weight: 0.4 }
     ],
     influencingParams: 'HDL cholesterol levels, Total cholesterol levels, Triglyceride levels, LDL cholesterol levels'
   },
@@ -83,7 +54,7 @@ var diseases = [
     name: 'Non-Alcoholic Fatty Liver Disease',
     targets: [
       { target: 'Triglycerides (mg/dL)', weight: 0.3 },
-      { target: 'HDL cholesterol (mg/dL)', weight: 0.2 },
+      { target: 'HDL cholesterol (mg/dL)', weight: -0.2 },
       { target: 'Insulin (pmol/L)', weight: 0.3 },
       { target: 'Total Fat (%)', weight: 0.2 }
     ],
@@ -91,7 +62,30 @@ var diseases = [
   }
 ];
 
+// Calculate risk scores based on predictions and performance metrics
+function calculateRisk(predictionsArray, performanceMetrics) {
+  const riskScores = performanceMetrics.map(metric => {
+    const prediction = parseFloat(predictionsArray.shift());
+    let riskScore = 0;
 
+    const [minRange, maxRange] = metric.range;
+
+    if (prediction < minRange) {
+      riskScore = 0;
+    } else if (prediction > maxRange) {
+      riskScore = 100;
+    } else {
+      const rangeDifference = maxRange - minRange;
+      const normalizedDeviation = (prediction - minRange) / rangeDifference;
+      riskScore = normalizedDeviation * 100;
+    }
+    return { target: metric.target, weight: metric.weight, riskScore: Math.abs(riskScore) };
+  });
+
+  return riskScores;
+}
+
+var riskScores = calculateRisk(predictionsArray, performanceMetrics);
 var overallRiskScores = [];
 diseases.forEach(function(disease) {
   var overallRiskScore = 0;
@@ -111,7 +105,7 @@ diseases.forEach(function(disease) {
 
   overallRiskScores.push({ 
     name: disease.name, 
-    overallRiskScore: overallRiskScore / totalWeight, 
+    overallRiskScore: (overallRiskScore / totalWeight) || 0, 
     influencingParams: disease.influencingParams 
   });
 });
@@ -142,7 +136,7 @@ function getRiskScoreColor(riskScore) {
     { score: 0, color: '#00FF00' }, // Green
     { score: 35, color: '#FFFF00' }, // Yellow
     { score: 65, color: '#FFA500' }, // Orange
-    { score: 70, color: '#FF0000' } // Red
+    { score: 100, color: '#FF0000' } // Red
   ];
 
   for (var i = 0; i < gradientColors.length - 1; i++) {

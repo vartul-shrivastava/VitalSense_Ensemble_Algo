@@ -7,8 +7,8 @@ var predictionsArray = predictionsParam.split(',');
 // Performance metrics with updated risk assessment
 var performanceMetrics = [
   { target: 'Glycohemoglobin', unit: '%', MAE: 0.240, thresholds: { veryHigh: 6.8, high: 6.4, moderate: 5.7 }, range: '4 - 5.7' },
-  { target: 'Insulin (pmol/L)', unit: 'pmol/L', MAE: 1.383, RMSE: 1.1545773173638372, thresholds: { veryHigh: 100, high: 50, moderate: 20 }, range: '10 - 20' },
-  { target: 'HDL cholesterol (mg/dL)', unit: 'mg/dL', MAE: 2.044, RMSE: 1.9784903164896723, thresholds: { veryHigh: 80, high: 65, moderate: 55 }, range: '35 - 55' },
+  { target: 'Insulin (pmol/L)', unit: 'pmol/L', MAE: 1.383, RMSE: 1.1545773173638372, thresholds: { veryHigh: 100, high: 50, moderate: 20 }, range: '5 - 25' },
+  { target: 'HDL cholesterol (mg/dL)', unit: 'mg/dL', MAE: 2.044, RMSE: 1.9784903164896723, thresholds: { veryHigh: 80, high: 70, moderate: 60 }, range: '35 - 55 (higher is better)' },
   { target: 'Total cholesterol (mg/dL)', unit: 'mg/dL', MAE: 0.4806, RMSE: 5.217620150083706, thresholds: { veryHigh: 240, high: 220, moderate: 200 }, range: '< 200' },
   { target: 'Triglycerides (mg/dL)', unit: 'mg/dL', MAE: 0.13175, RMSE: 0.08145638755300426, thresholds: { veryHigh: 400, high: 200, moderate: 175 }, range: ' < 175' },
   { target: 'LDL cholesterol (mg/dL)', unit: 'mg/dL', MAE: 12.729, RMSE: 6.078107751797688, thresholds: { veryHigh: 190, high: 160, moderate: 130 }, range: '< 100' },
@@ -52,7 +52,7 @@ var predictionsTable = document.getElementById('predictions-table');
 
 // Create the header row
 var headerRow = document.createElement('tr');
-headerRow.innerHTML = '<th>Target</th><th>Predicted ± Error</th><th>Risk Assessment</th><th>Range</th>';
+headerRow.innerHTML = '<th>Target</th><th>Predicted ± Error</th><th>Risk Assessment</th><th>Normal Range</th>';
 predictionsTable.appendChild(headerRow);
 
 performanceMetrics.forEach(function (metric) {
