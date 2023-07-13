@@ -2,14 +2,17 @@
 <html>
 <head>
   <title>Predicted Risk Assessment and Biomarkers</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">>
 
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <style>
     /* Popup styles */
     .popup {
+      backdrop-filter: blur(200px);
       position: fixed;
       top: 0;
       left: 0;
@@ -118,7 +121,6 @@
   </script>
 </head>
 <body>
-<!-- table 1 -->
 <div id="box1" style="display: none;">
   <h3 style="margin-top: 5%;">Assessing Disease Vulnerability and Influential Factors: Exquisite Risk Scores</h3>
   <div id="output"></div>
@@ -129,6 +131,9 @@
 <!-- table 2 -->
 <div id="box2" style="display: none;">
   <h3 style="margin-top: 1%;">Predicted Biomarkers and Comparative Assessment within the Spectrum of Normalcy</h3>
+  <div id="chartContainer">
+    <canvas id="lineChart" width="600" height="300"></canvas>
+  </div>
   <table>
     <tbody id="predictions-table"></tbody>
   </table>

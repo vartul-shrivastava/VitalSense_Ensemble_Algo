@@ -86,3 +86,62 @@ performanceMetrics.forEach(function (metric) {
 
   predictionsTable.appendChild(row);
 });
+
+// Retrieve the canvas element
+// Retrieve the canvas element
+var canvas = document.getElementById('lineChart');
+
+// Create an array to store the labels for the x-axis (biomarkers)
+var labels = [];
+
+// Create an array to store the biomarker values
+var biomarkerData = [];
+
+// Iterate over the performanceMetrics array to populate the labels and biomarkerData arrays
+performanceMetrics.forEach(function(metric) {
+  labels.push(metric.target);
+  var predictedValue = parseFloat(predictionsArray[performanceMetrics.indexOf(metric)]);
+  biomarkerData.push(predictedValue);
+});
+
+// Create an array to store the datasets for the line chart
+var datasets = [{
+  label: 'Biomarkers',
+  data: biomarkerData,
+  fill: false
+}];
+
+// Calculate the high range values
+var highRangeData = performanceMetrics.map(function(metric) {
+  var thresholds = metric.thresholds;
+  return thresholds.high;
+});
+
+// Add the high range dataset
+datasets.push({
+  label: 'Moderated Area Distribution',
+  data: highRangeData,
+  borderColor: 'rgba(255, 0, 0, 0)', // Set border color to transparent
+  backgroundColor: 'rgba(152, 255, 153, 0.8)', // Set background color for the area above high range line
+  fill: 'start' // Fill the area from the start point
+});
+
+// Create the chart
+var lineChart = new Chart(canvas, {
+  type: 'line',
+  data: {
+    labels: labels,
+    datasets: datasets
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Biomarker Value'
+        }
+      }
+    }
+  }
+});

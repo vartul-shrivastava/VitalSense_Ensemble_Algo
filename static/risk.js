@@ -168,5 +168,89 @@ function interpolateColor(color1, color2, percent) {
 
   return '#' + (r << 16 | g << 8 | b).toString(16).padStart(6, '0');
 }
+// Assuming you have included the Chart.js library in your HTML file
 
-// Function to save the current page as a PDF
+// Assuming you have included the Chart.js library in your HTML file
+
+// Extract the disease names and risk scores from the overallRiskScores array
+var diseaseNames = overallRiskScores.map(function(score) {
+  return score.name;
+});
+
+var riskScores = overallRiskScores.map(function(score) {
+  return score.overallRiskScore;
+});
+
+// Create a container element for the canvas
+var container = document.createElement('div');
+container.style.width = '900px'; // Set the desired width
+container.style.height = '400px'; // Set the desired height
+container.style.position = 'relative'; // Add positioning
+container.style.margin = '0 auto'; // Center the container horizontally
+container.style.display = 'flex';
+container.style.justifyContent = 'center';
+container.style.alignItems = 'center';
+
+// Create the canvas element
+var canvas = document.createElement('canvas');
+canvas.id = 'barChart';
+canvas.style.height = '400px';
+canvas.style.width = '900px';
+
+// Append the canvas to the container
+container.appendChild(canvas);
+// Append the container to the document body
+document.body.appendChild(container);
+
+// Create a bar chart using Chart.js
+var ctx = canvas.getContext('2d');
+
+// Get the risk score colors for each disease
+var riskScoreColors = overallRiskScores.map(function(score) {
+  return getRiskScoreColor(score.overallRiskScore);
+});
+
+
+
+var maxRange = Math.max(...riskScores) > 50 ? null : 50;
+
+var chart = new Chart(ctx, {
+  type: 'bar', // Set the chart type to bar
+  data: {
+    labels: diseaseNames,
+    datasets: [{
+      label: 'Risk Scores',
+      data: riskScores,
+      backgroundColor: riskScoreColors, // Set the background color of the bars
+      borderColor: 'rgba(0, 123, 255, 1)', // Set the border color of the bars
+      borderWidth: 1 // Set the border width of the bars
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    scales: {
+      x: {
+        beginAtZero: true,
+        suggestedMax: maxRange, // Set the maximum value for the x-axis // Start the y-axis at zero
+        ticks: {
+          font: {
+            size: 10 // Set the font size for the y-axis labels
+          }
+        }
+      },
+      y: {
+        ticks: {
+          font: {
+            size: 10 // Set the font size for the x-axis labels
+          }
+        }
+      }
+    },
+    plugins: {
+      legend: {
+        display: false // Hide the legend
+      }
+    }
+  }
+  
+});

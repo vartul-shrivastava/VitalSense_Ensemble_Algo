@@ -1,10 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200;400&display=swap');
 body {
-    font-family: 'Raleway', sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
-    background-color: rgba(226, 249, 255, 0.8);
+  font-family: 'Raleway', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  background-image: url(back.png);
+  background-color: rgba(226, 249, 255, 0.8);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: 100% 100%;
 }
+
 .box-overlay {
   z-index: 999;
   position: fixed;
@@ -34,6 +40,17 @@ body {
   top: 10px;
   right: 10px;
   cursor: pointer;
+}
+#lineChart {
+  font-size: small;
+  max-width: 1000px;
+  max-height: 300px;
+  /* Add any other desired styles */
+}
+#chartContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .high-value {
@@ -70,6 +87,12 @@ table {
   border-collapse: collapse;
   background-color: #d4f9ff;
   font-family: 'Roboto', sans-serif;
+}
+
+.vitSense{
+  margin-left: 50%;
+  margin-right: 50%;
+  max-width: 100px;
 }
 
 th, td {
