@@ -75,7 +75,10 @@ h5 {
   text-align: justify;
   width: 60%;
 }
-
+.project-about{
+  font-size: small;
+  text-align: center;
+}
 h6 {
   font-size: 14px;
   font-weight: 400;
@@ -121,16 +124,6 @@ h3 {
   font-family: 'Raleway', sans-serif;
 }
 
-.inline-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.inline-container img {
-  height: 30px;
-  margin-right: 10px;
-}
 
 header {
   backdrop-filter: blur(8px);
@@ -201,11 +194,12 @@ header {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    z-index: 999;
   }
   
   .disclaimer-image {
     flex: 0 0 30%;
-    max-width: 30%;
+    max-width: 25%;
   }
   
   .disclaimer-image img {
@@ -216,7 +210,7 @@ header {
   .disclaimer-text {
     flex: 0 0 70%;
     max-width: 70%;
-    text-align: left;
+    text-align: justify;
   }
   
   @media (max-width: 768px) {
@@ -253,9 +247,10 @@ header {
 
 #disclaimer-box {
     background-color: #fff;
-    padding: 20px;
+    padding: 10px;
     max-width: 800px;
     margin: 2% auto;
+    margin-bottom: 5%;
     text-align: center;
     border-radius: 10px;
 }
@@ -274,12 +269,11 @@ h2 {
 
 
 .disclaimer-text p {
-    font-size: 14px;
-    margin-bottom: 10px;
+    font-size: 12px;
 }
 
 .checkbox-section {
-    margin-top: 20px;
+    margin-top: 5px;
 }
 
 input[type="checkbox"] {
@@ -336,21 +330,6 @@ input[type="checkbox"] {
 #close-btn:hover {
     background-color: #1c5b6e;
 }
-
-.inline-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-  }
-  
-  .inline-container img {
-    width: 20px; /* Adjust the width as needed */
-    height: 20px; /* Adjust the height as needed */
-    margin-right: 7px; /* Adjust the spacing between the image and text as needed */
-    margin-bottom: 8px;
-    
-  }
 
   #question-container {
   max-width: 500px;
@@ -492,24 +471,16 @@ input[type="checkbox"] {
     width: 100%;
     background-color: #f8f8f896;
     padding: 10px 0;
+    z-index: 2;
   }
   
   .inline-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    text-align: center;
   }
+
+
   
-  .inline-container img {
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
-  }
-  
-  .inline-container p {
-    margin: 0;
-  }
-  
+
 
 
 

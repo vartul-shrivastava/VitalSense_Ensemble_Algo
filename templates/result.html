@@ -134,7 +134,7 @@
             <div class="box-container">
                 <h2>Algorithm and Dataset Overview</h2>
                 <h6>Vitalsense is an innovative tool that leverages an ensemble learning algorithm, specifically XGBoost, to predict the risk of diseases associated with obesity resulting from a sedentary lifestyle. The development of Vitalsense relies on the integration and preprocessing of NHANES (National Health and Nutrition Examination Survey) datasets from multiple years. NHANES datasets are renowned for providing comprehensive health information collected through surveys and physical examinations, making them a valuable source of data for studying various health-related factors.</h6>
-                <h6>            The preprocessing steps in Vitalsense involve data integration, filtering out instances with missing lab values, and applying the Multiple Imputation by Chained Equations (MICE) technique to handle remaining missing values. This ensures data quality and completeness, allowing for accurate predictions and reliable analysis. The XGBoost algorithm is then applied, benefiting from its ability to capture complex relationships and improve prediction accuracy. XGBoost constructs an ensemble of decision trees and combines their outputs to make robust predictions.</h6>
+                <h6>The preprocessing steps in Vitalsense involve data integration, filtering out instances with missing lab values, and applying the Multiple Imputation by Chained Equations (MICE) technique to handle remaining missing values. This ensures data quality and completeness, allowing for accurate predictions and reliable analysis. The XGBoost algorithm is then applied, benefiting from its ability to capture complex relationships and improve prediction accuracy. XGBoost constructs an ensemble of decision trees and combines their outputs to make robust predictions.</h6>
 
         
                     
@@ -171,13 +171,13 @@
     <tbody id="predictions-table"></tbody>
   </table>
   <script src="{{ url_for('static', filename='result.js') }}"></script>
-  <h5 style="margin-bottom: 5%;">
+  <h5 style="margin-bottom: 10%;">
     Note: It's important to understand that predicted biomarkers provided on this website are estimates and should be treated as reference values. Predicted values may not always be entirely accurate and can vary from actual measurements. These predictions are based on statistical models and may have inherent limitations or uncertainties. Therefore, it's crucial to interpret and use these predicted biomarkers cautiously. For accurate and reliable assessments of your health, we recommend consulting with a healthcare professional and conducting appropriate medical tests or evaluations. They will provide personalized guidance and insights based on comprehensive clinical assessments.</h5>
 </div>
-
 <footer class="footer">
-  <div class="inline-container" style="text-align: center;align-items: center;">
-    <p>Research Preview Developed by Dr. Pooja Jain and Vartul Shrivastava</p>
+  <div class="inline-container" >
+      <p style="font-weight: bold;margin: 5px auto;">Research Preview Developed by Dr. Pooja Jain and Vartul Shrivastava</p>
+      <p style="text-align: center; font-size: small;margin-bottom: 5px;">Based on the project titled 'Ensemble Learning Approach for Assessing Disease Risk due to Sedentary Lifestyle-Induced Obesity by Incorporating Physical Activity Levels'</p>
   </div>
 </footer>
 </body>
