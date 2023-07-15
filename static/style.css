@@ -42,12 +42,14 @@ body {
   cursor: pointer;
 }
 #lineChart {
-  font-size: small;
+  font-size: 10px;
   max-width: 1000px;
   max-height: 300px;
+
   /* Add any other desired styles */
 }
 #chartContainer {
+  font-size: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -486,8 +488,9 @@ input[type="checkbox"] {
     position: fixed;
     bottom: 0;
     left: 0;
+    backdrop-filter: blur(10px);
     width: 100%;
-    background-color: #f8f8f8;
+    background-color: #f8f8f896;
     padding: 10px 0;
   }
   

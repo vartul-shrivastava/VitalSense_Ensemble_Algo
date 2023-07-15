@@ -88,7 +88,6 @@ performanceMetrics.forEach(function (metric) {
 });
 
 // Retrieve the canvas element
-// Retrieve the canvas element
 var canvas = document.getElementById('lineChart');
 
 // Create an array to store the labels for the x-axis (biomarkers)
@@ -122,7 +121,7 @@ datasets.push({
   label: 'Moderated Area Distribution',
   data: highRangeData,
   borderColor: 'rgba(255, 0, 0, 0)', // Set border color to transparent
-  backgroundColor: 'rgba(152, 255, 153, 0.8)', // Set background color for the area above high range line
+  backgroundColor: createGradient(), // Set background color as a gradient
   fill: 'start' // Fill the area from the start point
 });
 
@@ -145,3 +144,13 @@ var lineChart = new Chart(canvas, {
     }
   }
 });
+
+// Function to create a gradient from red to green
+function createGradient() {
+  var ctx = canvas.getContext('2d');
+  var gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+  gradient.addColorStop(0, 'rgba(255, 0, 0, 1)'); // Start with red
+  gradient.addColorStop(0.5, 'rgba(211, 236, 101, 1)');
+  gradient.addColorStop(1, 'rgba(152, 255, 153, 1)'); // End with green
+  return gradient;
+}
